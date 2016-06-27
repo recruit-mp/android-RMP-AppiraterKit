@@ -96,7 +96,8 @@ public class AppiraterMeasure {
         }
     }
 
-    private AppiraterMeasure() {}
+    private AppiraterMeasure() {
+    }
 
     private static Result mLastResult;
 
@@ -148,7 +149,7 @@ public class AppiraterMeasure {
             prefsEditor.putInt(PREF_KEY_APP_VERSION_CODE, appVersionCode);
         }
 
-        prefsEditor.commit();
+        prefsEditor.apply();
 
         mLastResult = new Result(appLaunchCount, appThisVersionCodeLaunchCount, firstLaunchDate, appVersionCode, previousAppVersionCode);
         return mLastResult;
@@ -167,4 +168,142 @@ public class AppiraterMeasure {
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(context.getPackageName() + PREFS_PACKAGE_NAME_SUFFIX, Context.MODE_PRIVATE);
     }
+
+    /**
+     * AppiraterMeasure Raw data accessor.
+     */
+    public static class RawDataAccessor {
+        /**
+         * [AppiraterMeasure raw data] Gets launch count of AppiraterMeasure raw data.
+         *
+         * @param context Context
+         * @return [AppiraterMeasure raw data] Launch count of This application.
+         */
+        public long getAppLaunchCount(Context context) {
+            return AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .getLong(PREF_KEY_APP_LAUNCH_COUNT, 0);
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Sets launch count of AppiraterMeasure raw data.
+         *
+         * @param context        Context
+         * @param appLaunchCount [AppiraterMeasure raw data] Launch count of This application.
+         */
+        public void setAppLaunchCount(Context context, long appLaunchCount) {
+            AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .edit()
+                    .putLong(PREF_KEY_APP_LAUNCH_COUNT, appLaunchCount)
+                    .apply();
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Gets launch count of This application current version.
+         *
+         * @param context Context
+         * @return [AppiraterMeasure raw data] Launch count of This application current version.
+         */
+        public long getAppThisVersionCodeLaunchCount(Context context) {
+            return AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .getLong(PREF_KEY_APP_THIS_VERSION_CODE_LAUNCH_COUNT, 0);
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Sets launch count of This application current version.
+         *
+         * @param context                       Context
+         * @param appThisVersionCodeLaunchCount [AppiraterMeasure raw data] Launch count of This application current version.
+         */
+        public void setAppThisVersionCodeLaunchCount(Context context, long appThisVersionCodeLaunchCount) {
+            AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .edit()
+                    .putLong(PREF_KEY_APP_THIS_VERSION_CODE_LAUNCH_COUNT, appThisVersionCodeLaunchCount)
+                    .apply();
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Gets first launch date.
+         *
+         * @param context Context
+         * @return [AppiraterMeasure raw data] First launch date.
+         */
+        public long getFirstLaunchDate(Context context) {
+            return AppiraterMeasure.getSharedPreferences(context).getLong(PREF_KEY_APP_FIRST_LAUNCHED_DATE, 0);
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Sets first launch date.
+         *
+         * @param context         Context
+         * @param firstLaunchDate [AppiraterMeasure raw data] First launch date.
+         */
+        public void setFirstLaunchDate(Context context, long firstLaunchDate) {
+            AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .edit()
+                    .putLong(PREF_KEY_APP_FIRST_LAUNCHED_DATE, firstLaunchDate)
+                    .apply();
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Gets this application version code.
+         *
+         * @param context Context
+         * @return [AppiraterMeasure raw data] This application version code.
+         */
+        public int getAppVersionCode(Context context) {
+            return AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .getInt(PREF_KEY_APP_VERSION_CODE, Integer.MIN_VALUE);
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Sets this application version code.
+         *
+         * @param context        Context
+         * @param appVersionCode [AppiraterMeasure raw data] This application version code.
+         */
+        public void setAppVersionCode(Context context, int appVersionCode) {
+            AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .edit()
+                    .putInt(PREF_KEY_APP_VERSION_CODE, appVersionCode)
+                    .apply();
+        }
+
+        /**
+         * [AppiraterMeasure raw data] Reset AppiraterMeasure data.
+         *
+         * @param context Context
+         */
+        public void reset(Context context) {
+            AppiraterMeasure
+                    .getSharedPreferences(context)
+                    .edit()
+                    .clear()
+                    .apply();
+
+        }
+        /*package*/ RawDataAccessor() {
+        }
+
+    }
+
+    /**
+     * Gets {@link RawDataAccessor} instance.
+     *
+     * {@link RawDataAccessor} is able to access that raw data of AppiraterMeasure.
+     * Please use {@link RawDataAccessor} only if you are forced to overwrite AppiraterMeasure data.
+     * Normally, we recommend that you do not use this.
+     *
+     * @return {@link RawDataAccessor} instance.
+     */
+    public static RawDataAccessor getRawDataAccessor() {
+        return new RawDataAccessor();
+    }
+
 }
