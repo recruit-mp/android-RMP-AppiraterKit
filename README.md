@@ -9,7 +9,7 @@ RMP-AppiraterKit is an Android library to create your customaizable user review 
 Gradle:
 
 ```groovy
-compile 'jp.co.recruit_mp:android-RMP-AppiraterKit:1.0'
+compile 'jp.co.recruit_mp:android-RMP-AppiraterKit:1.1'
 ```
 
 ## Usage
