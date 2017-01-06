@@ -288,9 +288,9 @@ public class AppiraterMeasure {
                     .apply();
 
         }
+
         /*package*/ RawDataAccessor() {
         }
-
     }
 
     /**
@@ -305,5 +305,4 @@ public class AppiraterMeasure {
     public static RawDataAccessor getRawDataAccessor() {
         return new RawDataAccessor();
     }
-
 }
